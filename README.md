@@ -15,12 +15,12 @@
 Склонируйте репозиторий на вашу локальную машину:
 
 ```sh
-git clone https://github.com/username/repo-name.git
+git clone git@github.com:ai-integration-company/anomalies_java.git
 ```
 
 Перейдите в папку с проектом
 ```sh
-cd 
+cd anomalies_java
 ```
 ### Шаг 2: Сборка Docker Compose
 
