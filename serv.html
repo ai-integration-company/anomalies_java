@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Аномалии</title>
+</head>
+
+<body>
+    <h1>Детектор аномалий</h1>
+    <h2>Введите даты в промежутке от 2024-04-15T23:40 до 2024-05-16T00:40</h2>
+    <form id="form">
+        <label for="start">Дата начала отрезка:</label>
+        <input type="datetime-local" id="start" name="start">
+        <label for="end">Дата конца отрезка:</label>
+        <input type="datetime-local" id="end" name="end">
+        <button type="submit">Подтвердить</button>
+    </form>
+    <div id="error-message" style="color: red;"></div>
+    <div id="result">
+        <div>Максимальная вероятность: <span id="max-proba"></span></div>
+        <div>Время максимальной вероятности: <span id="proba-time"></span></div>
+    </div>
+    <div id="plots">
+        <img id="plot1" src="" alt="Plot 1">
+        <img id="plot2" src="" alt="Plot 2">
+        <img id="plot3" src="" alt="Plot 3">
+        <img id="plot4" src="" alt="Plot 4">
+    </div>
+    <script>
+        document.getElementById('form').addEventListener('submit', async function (event) {
+            event.preventDefault();
+            const start = document.getElementById('start').value;
+            const end = document.getElementById('end').value;
+            const errorMessage = document.getElementById('error-message');
+            errorMessage.textContent = '';
+            document.getElementById('max-proba').textContent = '';
+            document.getElementById('proba-time').textContent = '';
+            try {
+                const response = await fetch(`http://localhost:8000/anomalies?start=${start}&end=${end}`);
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    errorMessage.textContent = errorData.message;
+                    return;
+                }
+                const data = await response.json();
+                document.getElementById('plot1').src = 'data:image/png;base64,' + data.images[0];
+                document.getElementById('plot2').src = 'data:image/png;base64,' + data.images[1];
+                document.getElementById('plot3').src = 'data:image/png;base64,' + data.images[2];
+                document.getElementById('plot4').src = 'data:image/png;base64,' + data.images[3];
+                document.getElementById('max-proba').textContent = data.max_proba;
+                document.getElementById('proba-time').textContent = data.proba_time;
+            } catch (error) {
+                errorMessage.textContent = 'Произошла ошибка при обработке запроса';
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+matplotlib
+numpy
+pandas
+matplotlib
+seaborn
+prophet
+scikit-learn==1.2.2
+pyod
+combo
