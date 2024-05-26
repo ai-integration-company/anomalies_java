@@ -15,7 +15,7 @@
 Склонируйте репозиторий на вашу локальную машину:
 
 ```sh
-git clone git@github.com:ai-integration-company/anomalies_java.git
+git clone https://github.com/ai-integration-company/anomalies_java.git
 ```
 
 Перейдите в папку с проектом
